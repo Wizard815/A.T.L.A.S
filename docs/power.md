@@ -11,6 +11,26 @@ far better than the Li-ion cells on a PiJuice-style HAT.
 | Driving | ignition on | about 1.5 to 3 W |
 | Share | turned on from the app or the button | about 2 to 4 W, until off, a timeout, or 12.4 V |
 
+## 72 hours parked in winter, no charging
+
+Target: last 72 hours or more in a cold cab with no charge, doing one sync at the
+start and hourly checks after.
+
+| Load | Over 72 h |
+| --- | --- |
+| One sync at the start, Pi on up to 30 min at 3 W | 1.5 Wh |
+| Meshtastic radio, always on | about 4 Wh |
+| DC-DC converter idle, Witty Pi and ESP32-C3 asleep, hourly scans | about 4 Wh |
+| **Total** | **about 10 Wh** |
+
+A 12 V 6 Ah LiFePO4 holds about 75 Wh. Cold cuts usable capacity by up to half
+at -20 °C, so that still leaves about 3 times the need. 6 Ah is enough; pick
+10 Ah if you want room for Share mode at camp.
+
+- LiFePO4 must not be **charged** below 0 °C. Buy one whose BMS has
+  low-temperature charge protection (or a self-heating one), or set the DC-DC
+  charger's low-temperature cutoff. Discharging in the cold is fine.
+
 What goes wrong:
 
 - The ESP32-C3 scanner must run from an always-on 5 V feed, not the Witty Pi's

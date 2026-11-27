@@ -2,8 +2,8 @@
 
 Truck Share runs on [copyparty](https://github.com/9001/copyparty), the same
 file server already running on Unraid (`:3923`). It's one Python 3 file with no
-required dependencies, so it runs on the Pi 3B. Pillow and ffmpeg add thumbnails
-and video poster frames.
+required dependencies, so it runs on the Pi 3B. Install Pillow (`python3-pil`)
+for photo thumbnails and ffmpeg for video poster frames.
 
 - Guests scan a Wi-Fi QR to join `Truck-Share`, then the page QR (copyparty prints
   one with `--qr`). No app needed.
@@ -11,6 +11,27 @@ and video poster frames.
   own player (downloads support `Range`), pick several files and download them,
   and resumable uploads from the camera roll.
 - Speed: about 3 to 5 MB/s on a 3B, 20 or more phones.
+
+## How guests get in
+
+1. The Pi's built-in Wi-Fi runs `Truck-Share` (hostapd). The Wi-Fi QR holds its
+   name and password.
+2. dnsmasq hands out addresses and answers every name with the Pi, so the phone
+   shows its "sign in to network" page, which is the copyparty page. The page QR
+   (`http://atlas.local/`) is the fallback.
+3. The firewall forwards port 80 to copyparty (3923) and blocks guests from
+   everything else on the Pi. truckd's API needs the owner key anyway.
+4. There's no internet on `Truck-Share`, so some phones ask whether to stay
+   connected. Say yes.
+
+## Swipe to view
+
+copyparty's viewer isn't the swipe-through viewer DASH has. Rather than forking
+copyparty, add a small script of our own through copyparty's option for extra
+browser JS (`--js-browser`): it adds left/right swipe to the image and video
+viewer. It survives copyparty updates. Check what the installed version already
+does on a phone first. Videos play on the phone; the Pi only converts clips phones
+can't play.
 
 ## Accounts and permissions
 
