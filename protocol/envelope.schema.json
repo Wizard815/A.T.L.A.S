@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "A.T.L.A.S module message",
+  "type": "object",
+  "required": ["v", "id", "seq", "kind"],
+  "properties": {
+    "v": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]{1,24}$"},
+    "seq": {"type": "integer", "minimum": 0},
+    "ts": {"type": "string", "format": "date-time", "description": "missing when the module's clock is unknown"},
+    "boot": {"type": "integer", "description": "boot count, used to re-date readings with no clock"},
+    "kind": {"enum": ["hello", "state", "event", "backlog", "ack", "cmd"]},
+    "exp": {"type": "string", "format": "date-time", "description": "cmd only: ignore after this time"},
+    "data": {"type": "object"}
+  },
+  "additionalProperties": false
+}
