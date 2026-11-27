@@ -1,8 +1,8 @@
 # truckd HTTP API
 
-For the Atlas mod in the DASH phone app and the guest share page. Status stays on
-MQTT (`dash/v1/atlas/*`); files, pairing, share management, uploads and commands
-use this API.
+For the Atlas mod in the DASH phone app. Status stays on
+MQTT (`dash/v1/atlas/*`); pairing, Share mode and commands use this API; files are
+served by copyparty.
 
 Base: `http://atlas.local:8080` on the truck Wi-Fi (Pi at `10.42.0.1`), or the
 Pi's WireGuard address when away. Errors are `{"error": "what happened and what to do"}`.
@@ -11,11 +11,10 @@ Pi's WireGuard address when away. Errors are `{"error": "what happened and what 
 
 | Caller | Header | Can |
 | --- | --- | --- |
-| Guest on `Truck-Share` | none | list and download shared files, upload into `drop/` |
+| Guest on `Truck-Share` | none | nothing here; guests use copyparty |
 | Owner (paired phone) | `Authorization: Bearer atl_...` | everything below |
 
-Guest requests reach only `/share/*` and the guest upload routes; every other
-route returns 403 without an owner key.
+Guests reach only copyparty; every truckd route returns 403 without an owner key.
 
 ## Pairing
 
@@ -33,28 +32,17 @@ frames in one object, for when MQTT isn't reachable (over WireGuard).
 
 ## Truck Share
 
+Files are served by copyparty, not truckd: listing, downloads with `Range`,
+thumbnails and resumable uploads all use copyparty's own HTTP API and web page
+(see [share.md](share.md)). The DASH app's Atlas mod logs in to copyparty with
+the owner account for delete, move and hide.
+
+truckd keeps only the Share controls:
+
 | Route | Who | Does |
 | --- | --- | --- |
-| `GET /api/share/folders` | guest, owner | folders, with counts; hidden ones only for the owner |
-| `GET /api/share/files?folder=&after=&limit=` | guest, owner | `{items: [{id, name, type, size, taken, folder, url, thumb, play, converting}], next}`; `play` is the H.264 MP4 when one was made newest first, limit up to 200 |
-| `GET /share/f/{id}` | guest, owner | the file; supports `Range` so phones stream video |
-| `GET /share/t/{id}` | guest, owner | thumbnail (JPEG, 320 px) or video poster frame |
-| `DELETE /api/share/files/{id}` | owner | delete a file |
-| `PATCH /api/share/folders/{name}` `{"hidden": true}` | owner | hide or show a folder for guests |
 | `POST /api/share/mode` `{"on": true, "minutes": 120}` | owner | Share mode on or off; `minutes` 0 = until turned off |
-| `GET /api/share/qr` | owner | `{"wifi": "WIFI:T:WPA;S:Truck-Share;P:...;;", "page": "http://atlas.local/"}` |
-
-## Uploads (resumable)
-
-1. `POST /api/uploads` `{"name": "IMG_2041.jpg", "size": 4823112, "folder": "2026-11-27", "taken": "2026-11-27T14:02:00Z"}`
-   → `{"id": "u_...", "offset": 0}`. Guests always land in `drop/`.
-2. `PATCH /api/uploads/{id}` with header `Upload-Offset: <n>` and up to 8 MB of
-   body → `{"offset": <new>}`. A wrong offset returns 409 with the right one.
-3. `HEAD /api/uploads/{id}` → `Upload-Offset` header, to resume after a drop.
-4. When `offset == size` the file is checked, thumbnailed and appears in the share.
-   Videos a phone can't play get a background H.264 MP4 (see [share.md](share.md)).
-
-Unfinished uploads are removed after 24 hours.
+| `GET /api/share/qr` | owner | `{"wifi": "WIFI:T:WPA;S:Truck-Share;P:...;;", "page": "http://atlas.local:3923/", "owner": "<owner login link>"}` |
 
 ## Commands
 

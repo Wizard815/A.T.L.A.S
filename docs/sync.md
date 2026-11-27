@@ -11,7 +11,7 @@
 5. **Sync, small things first:**
    1. records to Overseer, `POST /api/ingest?name=truck`, stable ids so resends are harmless;
    2. live state to Home Assistant over the MQTT bridge with discovery;
-   3. files to Unraid, `trips/<date>-<name>/` (skipped on metered links);
+   3. files to the copyparty on Unraid over WebDAV (`rclone sync`), `trips/<date>-<name>/` (skipped on metered links);
    4. pull known networks, module config and firmware.
 6. **Mark done** per source, then shut down if the ignition is off and Share mode is off.
 

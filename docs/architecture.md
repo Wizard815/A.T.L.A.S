@@ -20,7 +20,7 @@ as that link can carry.
 | Meshtastic RAK4631 | mesh messages, always on at about 10 mA | USB serial |
 | WiCAN | OBD2 | truck Wi-Fi, MQTT |
 
-Services on the Pi: `truckd` (Go), Mosquitto, gpsd, Samba, the share page.
+Services on the Pi: `truckd` (Go), Mosquitto, gpsd, copyparty (Truck Share), ffmpeg for video conversion.
 
 ## Links home
 

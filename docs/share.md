@@ -1,26 +1,49 @@
-# Truck Share
+# Truck Share (copyparty)
 
-- Guests scan a Wi-Fi QR to join `Truck-Share`; the share page opens (a second QR opens it if not).
-- The page: photo and video grid, swipe full screen, videos play in the phone's own player,
-  select several to download, upload from the camera roll. No app needed.
-- Guests can't delete or rename. Only the owner key can, from the Atlas mod in the DASH phone app; the Pi checks it.
-- Guest Wi-Fi reaches only the share. Remote start, settings and module commands need the owner key.
-- At home files sync to Unraid; Home Assistant's Media browser shows them.
+Truck Share runs on [copyparty](https://github.com/9001/copyparty), the same
+file server already running on Unraid (`:3923`). It's one Python 3 file with no
+required dependencies, so it runs on the Pi 3B. Pillow and ffmpeg add thumbnails
+and video poster frames.
+
+- Guests scan a Wi-Fi QR to join `Truck-Share`, then the page QR (copyparty prints
+  one with `--qr`). No app needed.
+- copyparty's web page: browse, gallery, view photos, play video in the phone's
+  own player (downloads support `Range`), pick several files and download them,
+  and resumable uploads from the camera roll.
 - Speed: about 3 to 5 MB/s on a 3B, 20 or more phones.
+
+## Accounts and permissions
+
+| Volume | Guests (no login) | Owner account |
+| --- | --- | --- |
+| `/` (everything shared) | read, download | read, write, move, delete, admin |
+| `/drop` (guest uploads) | read, upload | read, write, move, delete, admin |
+| `/private` (hidden) | nothing | read, write, move, delete, admin |
+
+- Guests can't delete or rename: they never get copyparty's `m` or `d` permission,
+  and "unpost" (undo your own upload) is turned off.
+- Hiding a folder = the owner moves it into `/private`.
+- The owner logs in with the owner account. The Atlas mod in the DASH phone app
+  keeps that login and opens copyparty in owner mode; an owner QR does the same
+  on any phone.
+- Guest Wi-Fi reaches only copyparty. truckd's API (remote start, settings,
+  Share mode) needs the owner key.
+
+Draft config: [`brain/copyparty.conf`](../brain/copyparty.conf). Passwords live in
+`/etc/atlas/copyparty-accounts.conf` on the Pi, never in the repo.
 
 ## Videos phones can't play
 
-Uploads a phone browser can't play (MKV, some HEVC) are converted in the
-background to H.264 MP4 with ffmpeg (`h264_v4l2m2m`, the Pi's hardware
-encoder). The original is kept; both are served with `Range`.
+copyparty doesn't convert video for playback. truckd watches the share and
+converts uploads a phone can't play (MKV, some HEVC) to H.264 MP4 with ffmpeg
+(`h264_v4l2m2m`, the Pi's hardware encoder), saved next to the original.
 
 - The Pi 3B decodes HEVC in software, so a 1080p HEVC clip converts slower than
   real time. Conversions queue and run only while the truck is on or in Share
   mode, never on the battery-only hourly wake.
-- Until the MP4 is ready, the viewer shows the poster frame and "converting".
 
-## Viewer and owner mode
+## Home side
 
-Same feel as the DASH share page: a grid, then a swipe-through viewer for photos
-and videos that the phone plays itself. A separate owner QR (shown in the DASH
-app's Atlas mod) opens the same page in owner mode: delete, hide, Share mode.
+At home, trip and share files go to the copyparty on Unraid over WebDAV
+(`rclone sync`, through WireGuard), into `trips/<date>-<name>/`. Home Assistant's
+Media browser and Immich can read the same folder.
