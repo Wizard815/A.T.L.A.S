@@ -13,6 +13,9 @@ charger (better in heat).
 
 What goes wrong:
 
+- The ESP32-C3 scanner must run from an always-on 5 V feed, not the Witty Pi's
+  switched output, or it can't scan while the Pi is off.
+
 - Without a clean shutdown the boot disk corrupts. The Pi always shuts down
   itself; power is only cut by the HAT after it halts.
 - Boot from the USB SSD, not the SD card (on a 3B: `program_usb_boot_mode=1` once).

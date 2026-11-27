@@ -42,7 +42,7 @@ home/        Overseer token, Home Assistant package, Unraid share, mesh gateway
 - **Overseer**: `POST /api/ingest?name=truck`, record ids `truck:<module>:<seq>`.
 - **Home Assistant**: MQTT bridge with discovery; car care and travel book package.
 - **Unraid**: trip and share files under `trips/<date>-<name>/`.
-- **D.A.S.H**: the Atlas mod, `dash/v1/atlas/<type>` (spec in D.A.S.H `docs/mods/truck-protocol.md`).
+- **D.A.S.H**: the Atlas mod, `dash/v1/atlas/<type>` (spec in D.A.S.H `docs/mods/atlas-protocol.md`).
 - **FAITH**: remote start needs a Yes.
 
 ## License

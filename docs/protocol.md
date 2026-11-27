@@ -26,5 +26,9 @@ Envelope (`protocol/envelope.schema.json`):
 ## DASH (Atlas mod)
 
 `truckd` also publishes dash-mod v1 frames on `dash/v1/atlas/<type>`: `hi`,
-`obd`, `dtc`, `dtx`, `sync`, `wx`, `pwr`, `gps`, `bye`. The spec lives in D.A.S.H
-`docs/mods/truck-protocol.md`.
+`obd`, `dtc`, `dtx`, `sync`, `wx`, `pwr`, `gps`, `bye`. The spec lives in D.A.S.H `docs/mods/atlas-protocol.md`
+(Pi wiring and setup in `docs/mods/atlas.md`, added in
+https://github.com/Wizard815/D.A.S.H/pull/2). Any frame may carry `ts` (unix
+seconds), which DASH uses as its clock on the truck network. The ESP32-C3
+bridge firmware lives in D.A.S.H `bridge/`; `truckd` tells it whether a sync is
+needed with `{"m":"bridge","t":"need","sync":0|1}` on the UART.
