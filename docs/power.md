@@ -1,9 +1,9 @@
 # Power
 
 A battery of its own, charged by the truck while it runs, so the starter battery
-is never used. Battery choice is still open: PiJuice HAT (one board, Li-ion, keep
-out of the sun) or Witty Pi + small 12 V LiFePO4 (6 to 10 Ah) + small DC-DC
-charger (better in heat).
+is never used: a small 12 V LiFePO4 (6 to 10 Ah) charged by a small DC-DC
+charger with ignition sense, feeding the Witty Pi. LiFePO4 copes with a hot cab
+far better than the Li-ion cells on a PiJuice-style HAT.
 
 | Mode | When | Draw |
 | --- | --- | --- |
