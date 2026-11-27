@@ -36,7 +36,7 @@ frames in one object, for when MQTT isn't reachable (over WireGuard).
 | Route | Who | Does |
 | --- | --- | --- |
 | `GET /api/share/folders` | guest, owner | folders, with counts; hidden ones only for the owner |
-| `GET /api/share/files?folder=&after=&limit=` | guest, owner | `{items: [{id, name, type, size, taken, folder, url, thumb}], next}` newest first, limit up to 200 |
+| `GET /api/share/files?folder=&after=&limit=` | guest, owner | `{items: [{id, name, type, size, taken, folder, url, thumb, play, converting}], next}`; `play` is the H.264 MP4 when one was made newest first, limit up to 200 |
 | `GET /share/f/{id}` | guest, owner | the file; supports `Range` so phones stream video |
 | `GET /share/t/{id}` | guest, owner | thumbnail (JPEG, 320 px) or video poster frame |
 | `DELETE /api/share/files/{id}` | owner | delete a file |
@@ -52,6 +52,7 @@ frames in one object, for when MQTT isn't reachable (over WireGuard).
    body → `{"offset": <new>}`. A wrong offset returns 409 with the right one.
 3. `HEAD /api/uploads/{id}` → `Upload-Offset` header, to resume after a drop.
 4. When `offset == size` the file is checked, thumbnailed and appears in the share.
+   Videos a phone can't play get a background H.264 MP4 (see [share.md](share.md)).
 
 Unfinished uploads are removed after 24 hours.
 
