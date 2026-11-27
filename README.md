@@ -23,7 +23,7 @@ Design plan: https://claude.ai/artifact/9NbqhnBu763WGw4LTWEkMh
 ## Layout
 
 ```
-docs/        architecture, power, sync, protocol, share, parts
+docs/        architecture, power, sync, protocol, api, share, parts
 protocol/    message envelope schema (C header and Go types generated from it)
 brain/
   truckd/    Go service
@@ -42,7 +42,7 @@ home/        Overseer token, Home Assistant package, Unraid share, mesh gateway
 - **Home Assistant**: MQTT bridge with discovery; car care and travel book package.
 - **Unraid**: trip and share files under `trips/<date>-<name>/`.
 - **D.A.S.H**: the Atlas mod, `dash/v1/atlas/<type>` (spec in D.A.S.H `docs/mods/atlas-protocol.md`).
-- **DASH phone app**: the Atlas mod is the phone app (owner tools, remote start with a confirm). No separate Atlas app.
+- **DASH phone app**: the Atlas mod is the phone app (owner tools, remote start with a confirm), built against [docs/api.md](docs/api.md). No separate Atlas app.
 - **FAITH**: can ask for a Yes on remote start when home.
 
 ## License
