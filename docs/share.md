@@ -19,6 +19,7 @@ and video poster frames.
 | `/` (everything shared) | read, download | read, write, move, delete, admin |
 | `/drop` (guest uploads) | read, upload | read, write, move, delete, admin |
 | `/private` (hidden) | nothing | read, write, move, delete, admin |
+| `/dash` (from the DASH handheld) | read, download | read, write, move, delete, admin |
 
 - Guests can't delete or rename: they never get copyparty's `m` or `d` permission,
   and "unpost" (undo your own upload) is turned off.
@@ -31,6 +32,21 @@ and video poster frames.
 
 Draft config: [`brain/copyparty.conf`](../brain/copyparty.conf). Passwords live in
 `/etc/atlas/copyparty-accounts.conf` on the Pi, never in the repo.
+
+## Files from DASH
+
+DASH keeps a simple share on its own SD card and copies its files here, where
+Atlas shows the full version. A `dash` account may only write to `/dash`:
+
+- DASH sends `PUT /dash/<url-encoded name>` to `http://atlas.local:3923` with a
+  `PW: <dash password>` header and `Content-Length`, one file at a time, and
+  treats any 2xx as done. copyparty identifies the account by its password.
+- DASH never deletes anything on Atlas, and the `dash` account can't list or delete.
+- A file with the same name is saved under a new name rather than overwritten,
+  so DASH keeps its own list of files already sent.
+- Test both the PUT and the `PW` header against the copyparty version installed
+  on the Pi before relying on them. The DASH side is in D.A.S.H `docs/files.md`
+  ("Sync to the Truck Share").
 
 ## Videos phones can't play
 
