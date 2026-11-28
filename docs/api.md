@@ -53,15 +53,25 @@ truckd keeps only the Share controls:
 
 ## Commands
 
-`POST /api/cmd/remote-start` (owner) `{"nonce": "<random 16+ chars>", "exp": <unix seconds>}`
+`POST /api/cmd/fob` (owner) `{"c": "start", "nonce": "<random 16+ chars>", "exp": <unix seconds>}`
 
-- The phone asks for a confirm before sending.
+- `c` is `start`, `lock`, `unlock_driver` or `unlock_all`.
+- The phone asks for a confirm before a start.
 - `exp` at most 30 s ahead; each nonce works once.
+- truckd signs it with the fob key and sends it to the fob module, which
+  checks its own rules (see docs/remote-start.md).
 - Over Bluetooth the bridge passes a signed frame on the UART instead:
   `{"m":"bridge","t":"cmd","c":"remote_start","nonce","exp","sig","via":"ble"}`.
   `sig` is hex HMAC-SHA256 of `remote_start|<nonce>|<exp>` with the start key.
   For `via: ble`, `exp` may be up to 120 s ahead, since the Pi takes 30 to 60 s
   to boot. The same nonce, rate and safety rules apply.
-- Refused when the ignition is already on or the battery is below 12.4 V.
 - Answers `202 {"id": "c_..."}`; the result is published on `dash/v1/atlas/cmd`:
-  `{"m":"atlas","t":"cmd","id":"c_...","c":"remote_start","ok":1,"err":""}`.
+  `{"m":"atlas","t":"cmd","id":"c_...","c":"start","ok":1,"err":""}`.
+
+## Fob schedule
+
+| Route | Does |
+| --- | --- |
+| `GET /api/fob` | battery, last action, schedule, pauses, clock age (as last reported) |
+| `PUT /api/fob/schedule` `[{"days": "mon-fri", "at": "07:40", "c": "start"}]` | up to 8 entries; the fob module confirms before it answers 200 |
+| `POST /api/fob/pause` `{"skip_next": true}`, `{"skip": "2026-12-04"}` or `{"until": "2026-12-28"}` | pause; `{"clear": true}` removes pauses |

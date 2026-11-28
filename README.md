@@ -13,10 +13,11 @@ Design plan: https://claude.ai/artifact/9NbqhnBu763WGw4LTWEkMh
 | Part | What | Status |
 | --- | --- | --- |
 | Brain | Pi 3B + Witty Pi 4 Mini power HAT, mSATA SSD, two Wi-Fi radios, LTE modem HAT | planned |
-| `truckd` | Go service on the Pi: store, sync, API, GPIO, remote start | planned |
+| `truckd` | Go service on the Pi: store, sync, API, GPIO | planned |
 | OBD2 | MeatPi WiCAN (bought), or the DIY ESP32 in `modules/obd2` | planned |
 | Home scanner | ESP32-C3 that scans for home Wi-Fi while the Pi is off and wakes it; also the ESP-NOW bridge for DASH (firmware lives in D.A.S.H) | planned |
 | Meshtastic | RAK4631 on USB, runs on its own | planned |
+| Fob module | ESP32 mod with its own battery and a spare fob: scheduled and manual start, lock, unlock (`modules/fob`) | planned |
 | Truck Share | copyparty on the Pi: guests browse, play and upload, can't delete; owner tools in the DASH app's Atlas mod | planned |
 | Overland modules | ESP32 modules (power, water, fridge, level, loads, camp watch) | later |
 

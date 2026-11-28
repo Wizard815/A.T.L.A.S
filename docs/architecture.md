@@ -16,10 +16,10 @@ as that link can carry.
 | Weather: BME280 inside the box + DS18B20 probe outside | pressure and humidity; outside temperature on a long cable | I2C (GPIO 2/3, shared with the Witty Pi, no address clash) + 1-Wire (GPIO 17) |
 | Battery monitor | INA226: voltage and current of the LiFePO4 | I2C |
 | Ignition sense | PC817 from ACC | Witty Pi wake input + a GPIO |
-| Remote start | optocoupler across the starter input or a spare fob | GPIO |
 | ESP32-C3 home scanner / DASH bridge | scans while the Pi is off; ESP-NOW bridge while it's on | UART (`dtoverlay=miniuart-bt`, `/dev/ttyAMA0`) + Witty Pi wake input |
 | Meshtastic RAK4631 | mesh messages, always on at about 10 mA | USB serial |
 | WiCAN | OBD2 | truck Wi-Fi, MQTT |
+| Fob module (own mod, own battery) | remote start, lock, unlock, schedule | ESP-NOW through the bridge |
 
 ## Where everything plugs in
 
@@ -31,7 +31,7 @@ The Pi 3B has four USB ports. The LTE modem's GNSS stands in for the USB GPS, so
 | USB 2 | Wi-Fi adapter with antenna (finds home) |
 | USB 3 | LTE modem HAT (GNSS too, read by gpsd from its NMEA port) |
 | USB 4 | Meshtastic radio |
-| GPIO under the Witty Pi | ESP32-C3 (UART + wake line), weather sensors, ignition sense, remote start: a stacking header or short wires to the pins the Witty Pi doesn't use |
+| GPIO under the Witty Pi | ESP32-C3 (UART + wake line), weather sensors, ignition sense: a stacking header or short wires to the pins the Witty Pi doesn't use |
 | Wireless | WiCAN (OBD2) and DASH join the truck Wi-Fi; overland modules later do the same |
 
 Services on the Pi: `truckd` (Go), Mosquitto, gpsd, ModemManager + NetworkManager (LTE), copyparty (Truck Share), ffmpeg for video conversion.

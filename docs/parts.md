@@ -18,8 +18,9 @@ Rounded US prices from memory, not checked. Price a real cart before buying.
 | Verizon dedicated hotspot line, 15 GB, bundled with the phone line | LTE | 10 a month |
 | 5 V buck, 3 A or more | Pi + modem peaks | 10 |
 | BME280 + radiation shield | weather | 20 |
-| PC817 optocouplers + board | ignition sense, fob buttons | 10 |
-| Spare key fob + programming | remote start, lock, unlock | 50 to 150 |
+| PC817 optocoupler + board | ignition sense | 5 |
+| Fob module: ESP32-C3, LiFePO4 18650 + charger, buck-boost, DS3231, 3 PC817 | remote start mod | 30 to 45 |
+| Spare key fob + programming | inside the fob module | 50 to 150 |
 | NMO roof mount + cable, bulkhead N socket | antenna swap point | 40 to 60 |
 | 915 MHz antennas: short whip, 5.8 to 8 dBi fiberglass | daily and overlanding | 30 to 80 |
 | 10 m LMR-400 + telescoping mast | camp antenna | 60 to 120 |
