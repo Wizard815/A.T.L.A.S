@@ -1,5 +1,7 @@
 # A.T.L.A.S: Adventure Tech: Link, Archive, Sync
 
+[![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/license-PolyForm%20Shield%201.0.0-blue)](LICENSE)
+
 A small homelab that lives in the truck. A Raspberry Pi 3B sleeps fully off while
 parked, wakes to look for home, and syncs the trip to the home lab: records into
 Overseer, files to Unraid, live state into Home Assistant. While driving or in
@@ -47,4 +49,9 @@ home/        Overseer token, Home Assistant package, Unraid share, mesh gateway
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+A.T.L.A.S is source-available under the
+[PolyForm Shield License 1.0.0](LICENSE). You can read, run, change and share
+it for free, including at work. You can't sell it or offer it as a competing
+product or hosted service without permission: open an issue titled
+"License request" to ask. [docs/LICENSING.md](docs/LICENSING.md) explains it
+in plain English. Versions published before the switch stay under MIT.
