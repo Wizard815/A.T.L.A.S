@@ -11,12 +11,27 @@ far better than the Li-ion cells on a PiJuice-style HAT.
 | Driving | ignition on | about 1.5 to 3 W |
 | Share | turned on from the app or the button | about 2 to 4 W, until off, a timeout, or 12.4 V |
 
-## The battery is the UPS
+## Three sources, one reserve
 
-The Pi always runs from the small LiFePO4 through the 5 V converter. The truck
-only charges that battery (DC-DC charger on ignition). So there is no switch-over
-when the ignition goes off: the Pi keeps running on the battery, finishes its last
-check and shuts down cleanly.
+| Source | When | Role |
+| --- | --- | --- |
+| Truck (ACC) | ignition on | charges the reserve, runs everything |
+| Overland battery + solar | plugged into the box at camp | charges the reserve and keeps it full, so the system runs off it |
+| Reserve LiFePO4 (inside the box) | nothing else connected | the UPS: runs the Pi until it's turned off or 5 % is left |
+
+How it's wired:
+
+- The Pi always runs from the reserve LiFePO4 through the 5 V converter, so
+  nothing switches over and nothing reboots when a source comes or goes.
+- The truck input and the overland input meet at an ideal-diode OR board (two
+  inputs, about $10 to $15), which picks whichever is higher and stops current
+  flowing back into either. Its output feeds the DC-DC charger that charges the
+  reserve.
+- Set the DC-DC charger's input cutoff (about 12.2 V) so it stops drawing from the
+  overland battery before that battery is flat. Then the reserve takes over.
+- The overland input is a fused Anderson SB50 or Powerpole socket on the box.
+- A second INA226 reads the overland input, so `truckd` knows which source is
+  live and reports it in the `pwr` frame (`src`: `truck`, `overland` or `reserve`).
 
 ## Low-battery shutdown (about 5 %)
 
