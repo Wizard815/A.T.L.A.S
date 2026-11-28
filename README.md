@@ -23,7 +23,7 @@ Design plan: https://claude.ai/artifact/9NbqhnBu763WGw4LTWEkMh
 ## Layout
 
 ```
-docs/        architecture, power, sync, protocol, api, share, remote-start, antennas, parts
+docs/        architecture, power, sync, protocol, api, share, remote-start, antennas, lte-data, parts
 protocol/    message envelope schema (C header and Go types generated from it)
 brain/
   truckd/    Go service

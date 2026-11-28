@@ -42,7 +42,8 @@ A Quectel EC25-AF (the US variant) in an mPCIe-to-USB HAT gives Atlas its own
 data link and lets the truck Wi-Fi share it.
 
 - truckd picks links in order: home Wi-Fi, LTE, phone, Meshtastic. LTE use is
-  counted against a monthly cap, and only small data goes over it.
+  counted against a monthly cap, and only small data goes over it: see
+  [lte-data.md](lte-data.md).
 - Hotspot: while the Pi is on, the owner can turn on internet for the truck
   Wi-Fi from the app (`POST /api/hotspot`). Guests on `Truck-Share` get files
   only unless the owner allows internet for them too.

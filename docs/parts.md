@@ -13,9 +13,9 @@ Rounded US prices from memory, not checked. Price a real cart before buying.
 | USB Wi-Fi adapter with antenna | finds home | 15 to 25 |
 | ESP32-C3 SuperMini | home scanner, DASH bridge | 3 to 5 |
 | mPCIe LTE HAT, 2 SMA sockets | own data link, hotspot | 25 to 40 |
-| Quectel EC25-AF mini PCIe card (many HATs ship without one) | the modem; its GNSS replaces the USB GPS | 40 to 60 |
+| Quectel EC25-AF mini PCIe card (many HATs ship without one) | the modem; its GNSS replaces the USB GPS | 50 (open box, eBay) |
 | 2x2 MIMO LTE roof puck with GNSS, short cable + u.FL-to-SMA pigtails | LTE and GPS | 40 to 80 |
-| Carrier SIM, data-only or tablet line that allows hotspot use (check micro or nano size) | LTE | 10 to 30 a month |
+| Verizon dedicated hotspot line, 15 GB, bundled with the phone line | LTE | 10 a month |
 | 5 V buck, 3 A or more | Pi + modem peaks | 10 |
 | BME280 + radiation shield | weather | 20 |
 | PC817 optocouplers + board | ignition sense, fob buttons | 10 |
