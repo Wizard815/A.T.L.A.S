@@ -25,7 +25,9 @@ The token is shown once and the Pi stores only its hash. `start_key` is the shar
 Bluetooth remote-start key (the same `BRIDGE_START_KEY` the ESP32-C3 holds); the
 app keeps it in the phone's keystore. Outside the window: 403. Removing every
 owner or `POST /api/start-key/rotate` makes a new key, which truckd sends to the
-bridge over the UART.
+bridge over the UART only (`{"m":"bridge","t":"key","k":"<64 hex>"}`; the bridge
+stores it in flash and answers `{"m":"bridge","t":"key","ok":1}`, or `ok` 0
+with `err`).
 
 `GET /api/owners` lists paired phones; `DELETE /api/owners/{name}` removes one.
 
