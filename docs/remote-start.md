@@ -40,7 +40,7 @@ Bluetooth to the bridge, which wakes the Pi first (about 30 to 60 s).
 | From | Path | Delay |
 | --- | --- | --- |
 | DASH phone app on the truck Wi-Fi, or over LTE/home | truckd API, then ESP-NOW to the fob module | up to 10 s |
-| DASH device in the cab | Atlas mod frame to truckd, then the fob module | up to 10 s |
+| DASH device in the cab ("Fob" page) | truckd HTTP API with its own owner token (`DASH_ATLAS_OWNER_TOKEN`, paired like a phone), so a spoofed ESP-NOW frame can never start the truck | up to 10 s |
 | Phone near the truck, Pi off | Bluetooth to the bridge, wakes the Pi | 30 to 60 s |
 | Schedule | the fob module on its own | none |
 
@@ -80,8 +80,9 @@ If the garage doesn't report open within 60 s, it doesn't start and tells you.
 
 - The fob module talks only to the ESP32-C3 bridge over encrypted ESP-NOW
   (channel 6). truckd sees it as `truck/fob/*` (module protocol).
-- While parked, it wakes every 10 s and asks the bridge for a pending command
-  (a few ms of radio). With the Pi off the bridge doesn't answer and the fob
+- While parked, it wakes every 10 s and sends a `kind: "poll"` frame to the
+  bridge, then listens about 50 ms. The bridge holds up to 4 truckd commands for
+  the fob (30 s each) and sends them the moment a poll arrives. With the Pi off the bridge doesn't answer and the fob
   module goes back to sleep.
 - Commands carry a nonce and expire after 30 s, and are signed with HMAC-SHA256
   using the fob key (set when the fob module is paired). Old or repeated

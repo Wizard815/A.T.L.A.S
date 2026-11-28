@@ -72,6 +72,19 @@ truckd keeps only the Share controls:
 
 | Route | Does |
 | --- | --- |
-| `GET /api/fob` | battery, last action, schedule, pauses, clock age (as last reported) |
+| `GET /api/fob` | battery, last action, schedule, pauses, clock age (as last reported), shape below |
 | `PUT /api/fob/schedule` `[{"days": "mon-fri", "at": "07:40", "c": "start"}]` | up to 8 entries; the fob module confirms before it answers 200 |
 | `POST /api/fob/pause` `{"skip_next": true}`, `{"skip": "2026-12-04"}` or `{"until": "2026-12-28"}` | pause; `{"clear": true}` removes pauses |
+
+`GET /api/fob` answers:
+
+```json
+{"battery": 87,
+ "last": {"c": "start", "at": 1795000000, "ok": 1, "err": ""},
+ "schedule": [{"days": "mon-fri", "at": "07:40", "c": "start"}],
+ "pauses": {"skip_next": false, "skip": ["2026-12-04"], "until": "2026-12-28"},
+ "clock_age_s": 120}
+```
+
+`battery` is percent; `at` is unix seconds; `until` is `""` when not set;
+`clock_age_s` is seconds since the fob module last got the time from truckd.
