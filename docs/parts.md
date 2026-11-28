@@ -14,7 +14,11 @@ Rounded US prices from memory, not checked. Price a real cart before buying.
 | ESP32-C3 SuperMini | home scanner, DASH bridge | 3 to 5 |
 | u-blox USB GPS | position, time | 20 to 45 |
 | BME280 + radiation shield | weather | 20 |
-| PC817 optocouplers + board | ignition sense, remote start | 10 |
+| PC817 optocouplers + board | ignition sense, fob buttons | 10 |
+| Spare key fob + programming | remote start, lock, unlock | 50 to 150 |
+| NMO roof mount + cable, bulkhead N socket | antenna swap point | 40 to 60 |
+| 915 MHz antennas: short whip, 5.8 to 8 dBi fiberglass | daily and overlanding | 30 to 80 |
+| 10 m LMR-400 + telescoping mast | camp antenna | 60 to 120 |
 | RAK4631 + 915 MHz antenna | Meshtastic | 60 to 90 |
 | MeatPi WiCAN + extension | OBD2 | 50 to 70 |
 | Battery + charger | see power.md | open |
