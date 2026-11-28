@@ -23,11 +23,12 @@ as that link can carry.
 
 ## Where everything plugs in
 
-The Pi 3B has four USB ports. The LTE modem's GNSS stands in for the USB GPS, so they are still exactly enough:
+The Pi 3B has four USB ports. The X852 takes one and gives back two through its own USB hub, so there are spare ports:
 
 | Port or pins | What |
 | --- | --- |
-| USB 1 | Geekworm X852 mSATA board with a 64 GB mSATA SSD (a second one is the spare): the NAS and the boot disk (OS runs from it). truckd deletes synced trip files oldest first when space drops below 20 %. Check it mounts without taking the GPIO header the Witty Pi uses, and power it from the 5 V supply if it has its own input, since the Pi 3B USB ports share about 1.2 A |
+| USB 1 | Geekworm X852 dual mSATA board (one USB 3.0 link with a built-in hub, plus 2 extra USB ports). Slot 1: 64 GB mSATA, the NAS and boot disk. Slot 2: the second 64 GB for camera clips, or keep it as a spare. truckd deletes synced trip files oldest first when space drops below 20 % |
+| X852 USB ports | spare: a USB GPS or Wi-Fi adapter later |
 | USB 2 | Wi-Fi adapter with antenna (finds home) |
 | USB 3 | LTE modem HAT (GNSS too, read by gpsd from its NMEA port) |
 | USB 4 | Meshtastic radio |
@@ -35,6 +36,20 @@ The Pi 3B has four USB ports. The LTE modem's GNSS stands in for the USB GPS, so
 | Wireless | WiCAN (OBD2) and DASH join the truck Wi-Fi; overland modules later do the same |
 
 Services on the Pi: `truckd` (Go), Mosquitto, gpsd, ModemManager + NetworkManager (LTE), copyparty (Truck Share), ffmpeg for video conversion.
+
+## Powering the X852
+
+The X852's 5 V DC jack (5.1 V, 4 A) can power the Pi through a 2-pin cable to the
+GPIO 5 V pins. Don't do that with the Witty Pi: it would feed the Pi around the
+Witty Pi's switch, so the Pi could never turn off.
+
+- Feed the Witty Pi from the 5 V buck (4 A or more). It switches the Pi's 5 V.
+- Power the X852 from the Pi's GPIO 5 V with its 2-pin cable (power flows
+  Pi to X852), so the SSDs turn off with the Pi.
+- Never power the Pi from micro USB as well. Geekworm says micro USB (2.5 A
+  max) may not give the SSDs enough current.
+- Check the stack fits: X852 under the Pi on standoffs, Witty Pi 4 Mini on the
+  header, LTE HAT beside it on a cable.
 
 ## LTE modem and truck hotspot
 
