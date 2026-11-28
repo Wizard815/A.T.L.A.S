@@ -14,6 +14,7 @@ as that link can carry.
 | USB SSD 1 to 2 TB | NAS, log, boot disk | USB |
 | u-blox GPS | position, speed, time | USB |
 | Weather: BME280 inside the box + DS18B20 probe outside | pressure and humidity; outside temperature on a long cable | I2C (GPIO 2/3, shared with the Witty Pi, no address clash) + 1-Wire (GPIO 17) |
+| Battery monitor | INA226: voltage and current of the LiFePO4 | I2C |
 | Ignition sense | PC817 from ACC | Witty Pi wake input + a GPIO |
 | Remote start | optocoupler across the starter input or a spare fob | GPIO |
 | ESP32-C3 home scanner / DASH bridge | scans while the Pi is off; ESP-NOW bridge while it's on | UART (`dtoverlay=miniuart-bt`, `/dev/ttyAMA0`) + Witty Pi wake input |
@@ -26,7 +27,7 @@ No extra HAT is needed. The Pi 3B has four USB ports, and they are exactly enoug
 
 | Port or pins | What |
 | --- | --- |
-| USB 1 | Geekworm X852 mSATA board with an mSATA SSD: the NAS and the boot disk (OS runs from it). Check it mounts without taking the GPIO header the Witty Pi uses, and power it from the 5 V supply if it has its own input, since the Pi 3B USB ports share about 1.2 A |
+| USB 1 | Geekworm X852 mSATA board with a 64 GB mSATA SSD (a second one is the spare): the NAS and the boot disk (OS runs from it). truckd deletes synced trip files oldest first when space drops below 20 %. Check it mounts without taking the GPIO header the Witty Pi uses, and power it from the 5 V supply if it has its own input, since the Pi 3B USB ports share about 1.2 A |
 | USB 2 | Wi-Fi adapter with antenna (finds home) |
 | USB 3 | GPS |
 | USB 4 | Meshtastic radio |

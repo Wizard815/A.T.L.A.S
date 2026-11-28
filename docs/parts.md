@@ -6,7 +6,8 @@ Rounded US prices from memory, not checked. Price a real cart before buying.
 | --- | --- | --- |
 | Raspberry Pi 3 Model B | brain | 30 (bought) |
 | Witty Pi 4 Mini | timed wake, power off, wake on ignition | 30 |
-| Geekworm X852 + mSATA SSD | NAS, boot disk | check price |
+| Geekworm X852 + 64 GB mSATA SSD | NAS, boot disk | X852 only (SSDs owned) |
+| INA226 module | battery voltage and current | 5 |
 | USB Wi-Fi adapter with antenna | finds home | 15 to 25 |
 | ESP32-C3 SuperMini | home scanner, DASH bridge | 3 to 5 |
 | u-blox USB GPS | position, time | 20 to 45 |

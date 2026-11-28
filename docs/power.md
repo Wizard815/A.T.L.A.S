@@ -11,6 +11,25 @@ far better than the Li-ion cells on a PiJuice-style HAT.
 | Driving | ignition on | about 1.5 to 3 W |
 | Share | turned on from the app or the button | about 2 to 4 W, until off, a timeout, or 12.4 V |
 
+## The battery is the UPS
+
+The Pi always runs from the small LiFePO4 through the 5 V converter. The truck
+only charges that battery (DC-DC charger on ignition). So there is no switch-over
+when the ignition goes off: the Pi keeps running on the battery, finishes its last
+check and shuts down cleanly.
+
+## Low-battery shutdown (about 5 %)
+
+An INA226 on I2C (about $5) reads the battery's voltage and current, so `truckd`
+knows the charge level (LiFePO4 voltage is too flat to judge by eye).
+
+- At about 5 % (around 12.0 V at rest), held for 30 s: `truckd` saves its store,
+  stops any sync where it can resume, queues a "low battery" event, sends `bye`
+  to DASH, and shuts down.
+- It tells the ESP32-C3 not to wake the Pi, and sets no Witty Pi wake, until the
+  battery is charging again (above about 13.2 V).
+- The ignition coming on always wakes it, since the truck is then charging.
+
 ## 72 hours parked in winter, no charging
 
 Target: last 72 hours or more in a cold cab with no charge, doing one sync at the
