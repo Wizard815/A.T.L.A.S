@@ -57,7 +57,8 @@ start and hourly checks after.
 | Meshtastic radio, always on | about 4 Wh |
 | DC-DC converter idle, Witty Pi asleep, hourly scans | about 4 Wh |
 | ESP32-C3 listening for Bluetooth remote start (about 5 mA, estimated) | about 2 Wh |
-| **Total** | **about 12 Wh** |
+| LTE light sync every 6 h, Pi + modem on about 2 min at 4 W (12 times) | about 1.6 Wh |
+| **Total** | **about 14 Wh** |
 
 A 12 V 6 Ah LiFePO4 holds about 75 Wh. Cold cuts usable capacity by up to half
 at -20 °C, so that still leaves about 3 times the need. 6 Ah is enough; pick

@@ -15,4 +15,20 @@
    4. pull known networks, module config and firmware.
 6. **Mark done** per source, then shut down if the ignition is off and Share mode is off.
 
+## Light sync over LTE while parked
+
+Home can be days away, so the truck also checks in over LTE without waiting
+for a home network.
+
+- While data is waiting, the ESP32-C3 also wakes the Pi every 6 hours
+  (`BRIDGE_LTE_SYNC_EVERY_H`, 0 = off; DASH `docs/mods/atlas.md`).
+- truckd brings up LTE, proves home over WireGuard the same way, and sends only
+  steps 1 and 2 plus logs, GPX and weather, within the [LTE budget](lte-data.md).
+  Photos and video stay queued for home Wi-Fi.
+- It then sends `sync` with `st: "partial"` and shuts down. Any `st` other than
+  `synced` keeps the bridge's hourly home Wi-Fi scan going, so the big files
+  still go up once the truck is home.
+- No LTE signal: it gives up after 2 minutes and tries again at the next wake.
+- A home Wi-Fi match always wins over LTE.
+
 Known networks are tagged `home`, `phone` or `other`, plus `metered`.
