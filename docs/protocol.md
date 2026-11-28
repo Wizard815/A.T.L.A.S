@@ -32,3 +32,19 @@ https://github.com/Wizard815/D.A.S.H/pull/2). Any frame may carry `ts` (unix
 seconds), which DASH uses as its clock on the truck network. The ESP32-C3
 bridge firmware lives in D.A.S.H `bridge/`; `truckd` tells it whether a sync is
 needed with `{"m":"bridge","t":"need","sync":0|1}` on the UART.
+
+## Alerts
+
+truckd sends alerts to DASH (and S.C.R.E.E.N) as a dash-mod frame on
+`dash/v1/atlas/alert` (spec: D.A.S.H `docs/mods/atlas-protocol.md`, "Alerts on DASH"):
+
+```json
+{"m":"atlas","t":"alert","id":"a_17","k":"theft","lvl":3,"msg":"Ignition on, no owner nearby","snap":0}
+```
+
+- `k`: `cooler`, `cam`, `theft`, `lowbatt`. `lvl`: 1 info (blue), 2 warning
+  (amber, repeats every 5 min), 3 urgent (red, repeats every 30 s) until seen.
+  `lvl` 0 with the same `id` clears it.
+- Keep `msg` under 70 characters so the frame stays under 240 bytes.
+- `snap: 1` means a camera snapshot is waiting in the phone app.
+- The same alert also goes to the phone, HA and Overseer.

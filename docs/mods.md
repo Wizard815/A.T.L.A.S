@@ -80,7 +80,8 @@ Routes, Engine, Entertainment, Navigation", or "Smart Cab Readout for Every
 Expedition Need".
 
 - Shows sensors, OBD2 and codes, fob buttons, cooler, camera alerts, LTE data,
-  battery. It uses the same truckd API and owner token as the DASH device.
+  battery. It uses the same truckd API and owner token as the DASH device, and
+  can reuse DASH's `dash_core` library (Atlas, fob and alert parsing, plain C++).
 - **Voice:** the ESP32-S3 can be a voice satellite (mic + speaker, wake word on
   the chip). Speech goes over LTE or home Wi-Fi to the Omi and Argos setup at home,
   which has the real models.
