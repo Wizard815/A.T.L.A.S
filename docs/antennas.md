@@ -7,7 +7,7 @@ everything. But each band can have one swap point and three antennas.
 | --- | --- | --- |
 | Meshtastic | 915 MHz | the main swap system below |
 | Wi-Fi (truck network, finding home) and Bluetooth | 2.4 GHz | one antenna per radio, on the back window; a 2.4 GHz omni on the camp mast for Truck Share range |
-| GPS | 1575 MHz | a small active puck on the roof, never swapped |
+| LTE (modem HAT) and GPS | 700 to 2700 MHz, 1575 MHz | one 2-in-1 or 3-in-1 roof antenna: two LTE leads (MIMO) and a GNSS lead to the modem; not swapped. A cell booster would help phones and calls but gives Atlas no data, so the modem replaces it |
 | Ham or GMRS radio (later) | 144 to 462 MHz | its own roof mount |
 
 Weather is a sensor, not a radio, so it needs no antenna.

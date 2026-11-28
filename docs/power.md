@@ -8,8 +8,8 @@ far better than the Li-ion cells on a PiJuice-style HAT.
 | Mode | When | Draw |
 | --- | --- | --- |
 | Parked | ignition off | Pi off. Only while something is unsent: the ESP32-C3 scans for about 2 s an hour (about 0.02 Wh a day) |
-| Driving | ignition on | about 1.5 to 3 W |
-| Share | turned on from the app or the button | about 2 to 4 W, until off, a timeout, or 12.4 V |
+| Driving | ignition on | about 1.5 to 3 W, plus 1 to 3 W with LTE on |
+| Share | turned on from the app or the button | about 2 to 4 W (4 to 7 W as a hotspot over LTE), until off, a timeout, or 12.4 V |
 
 ## Three sources, one reserve
 
@@ -53,13 +53,15 @@ start and hourly checks after.
 | Load | Over 72 h |
 | --- | --- |
 | One sync at the start, Pi on up to 30 min at 3 W | 1.5 Wh |
+| LTE modem | 0 (off with the Pi; a sync over LTE adds about 1 Wh) |
 | Meshtastic radio, always on | about 4 Wh |
 | DC-DC converter idle, Witty Pi and ESP32-C3 asleep, hourly scans | about 4 Wh |
 | **Total** | **about 10 Wh** |
 
 A 12 V 6 Ah LiFePO4 holds about 75 Wh. Cold cuts usable capacity by up to half
 at -20 °C, so that still leaves about 3 times the need. 6 Ah is enough; pick
-10 Ah if you want room for Share mode at camp.
+10 Ah if you want room for Share mode or the hotspot at camp (a 10 Ah battery runs
+the LTE hotspot about 15 to 20 hours on its own).
 
 - LiFePO4 must not be **charged** below 0 °C. Buy one whose BMS has
   low-temperature charge protection (or a self-heating one), or set the DC-DC

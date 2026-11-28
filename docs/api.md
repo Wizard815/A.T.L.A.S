@@ -42,6 +42,7 @@ truckd keeps only the Share controls:
 | Route | Who | Does |
 | --- | --- | --- |
 | `POST /api/share/mode` `{"on": true, "minutes": 120}` | owner | Share mode on or off; `minutes` 0 = until turned off |
+| `POST /api/hotspot` `{"on": true, "guests": false}` | owner | share LTE internet on the truck Wi-Fi; `guests` lets `Truck-Share` use it too. Status shows data used this month |
 | `GET /api/share/qr` | owner | `{"wifi": "WIFI:T:WPA;S:Truck-Share;P:...;;", "page": "http://atlas.local:3923/", "owner": "<owner login link>"}` |
 
 ## Commands

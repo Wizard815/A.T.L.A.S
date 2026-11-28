@@ -12,7 +12,7 @@ Design plan: https://claude.ai/artifact/9NbqhnBu763WGw4LTWEkMh
 
 | Part | What | Status |
 | --- | --- | --- |
-| Brain | Pi 3B + Witty Pi 4 Mini power HAT, USB SSD, two Wi-Fi radios | planned |
+| Brain | Pi 3B + Witty Pi 4 Mini power HAT, mSATA SSD, two Wi-Fi radios, LTE modem HAT | planned |
 | `truckd` | Go service on the Pi: store, sync, API, GPIO, remote start | planned |
 | OBD2 | MeatPi WiCAN (bought), or the DIY ESP32 in `modules/obd2` | planned |
 | Home scanner | ESP32-C3 that scans for home Wi-Fi while the Pi is off and wakes it; also the ESP-NOW bridge for DASH (firmware lives in D.A.S.H) | planned |
