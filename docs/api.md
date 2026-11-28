@@ -20,8 +20,12 @@ Guests reach only copyparty; every truckd route returns 403 without an owner key
 
 Press the box's button: a 2 minute pairing window opens (status LED blinks).
 
-`POST /api/pair` `{"name": "Pixel 8"}` → `{"token": "atl_...", "name": "pixel-8"}`.
-Shown once; the Pi stores only its hash. Outside the window: 403.
+`POST /api/pair` `{"name": "Pixel 8"}` → `{"token": "atl_...", "name": "pixel-8", "start_key": "<64 hex>"}`.
+The token is shown once and the Pi stores only its hash. `start_key` is the shared
+Bluetooth remote-start key (the same `BRIDGE_START_KEY` the ESP32-C3 holds); the
+app keeps it in the phone's keystore. Outside the window: 403. Removing every
+owner or `POST /api/start-key/rotate` makes a new key, which truckd sends to the
+bridge over the UART.
 
 `GET /api/owners` lists paired phones; `DELETE /api/owners/{name}` removes one.
 
@@ -51,6 +55,11 @@ truckd keeps only the Share controls:
 
 - The phone asks for a confirm before sending.
 - `exp` at most 30 s ahead; each nonce works once.
+- Over Bluetooth the bridge passes a signed frame on the UART instead:
+  `{"m":"bridge","t":"cmd","c":"remote_start","nonce","exp","sig","via":"ble"}`.
+  `sig` is hex HMAC-SHA256 of `remote_start|<nonce>|<exp>` with the start key.
+  For `via: ble`, `exp` may be up to 120 s ahead, since the Pi takes 30 to 60 s
+  to boot. The same nonce, rate and safety rules apply.
 - Refused when the ignition is already on or the battery is below 12.4 V.
 - Answers `202 {"id": "c_..."}`; the result is published on `dash/v1/atlas/cmd`:
   `{"m":"atlas","t":"cmd","id":"c_...","c":"remote_start","ok":1,"err":""}`.

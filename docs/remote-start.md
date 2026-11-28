@@ -43,7 +43,20 @@ once in the app.
 ## Bluetooth range
 
 Bluetooth comes from the ESP32-C3 (it has BLE), not the Pi, so it listens while
-the Pi is off (a few mA). Use a C3 board with an antenna connector and a small
+the Pi is off (about 5 mA: it wakes every 6 s and listens for 1.5 s). Use a C3 board with an antenna connector and a small
 2.4 GHz antenna on the window. Expect about 30 to 100 m to a phone: the phone's
 own small antenna is the limit, so a bigger truck antenna helps only so much. The
 truck Wi-Fi reaches further when the Pi is on.
+
+How a Bluetooth start is checked (bridge firmware: D.A.S.H `docs/mods/atlas.md`,
+"Remote start over Bluetooth"):
+
+- The phone signs `remote_start|<nonce>|<exp>` with the start key it got at
+  pairing. The bridge refuses bad signatures, repeated nonces (last 8), more
+  than one start a minute, and `exp` more than 120 s ahead or in the past, so a
+  stranger can't wake the Pi.
+- The bridge wakes the Pi and sends the frame right after its `hi`. truckd checks
+  the signature again, then the safety rules above.
+- A start the Pi never wakes for is dropped after 5 minutes.
+- The bridge can only judge `exp` once truckd has set its clock (from `ts` in
+  truckd's frames), so the Pi must have booted once since the bridge lost power.
