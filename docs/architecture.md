@@ -26,7 +26,7 @@ No extra HAT is needed. The Pi 3B has four USB ports, and they are exactly enoug
 
 | Port or pins | What |
 | --- | --- |
-| USB 1 | SSD (the NAS), through a small powered USB hub or a Y-cable, because the Pi 3B's USB ports share about 1.2 A |
+| USB 1 | Geekworm X852 mSATA board with an mSATA SSD: the NAS and the boot disk (OS runs from it). Check it mounts without taking the GPIO header the Witty Pi uses, and power it from the 5 V supply if it has its own input, since the Pi 3B USB ports share about 1.2 A |
 | USB 2 | Wi-Fi adapter with antenna (finds home) |
 | USB 3 | GPS |
 | USB 4 | Meshtastic radio |
